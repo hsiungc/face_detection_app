@@ -1,17 +1,55 @@
+import cv2
 import numpy as np
-import cv2 as cv
+import paho.mqtt.client as mqtt
 
-cap = cv.VideoCapture(0)
+LOCAL_MQTT_HOST = "localhost"
+LOCAL_MQTT_PORT = 1883
+LOCAL_MQTT_TOPIC = "test_topic"
 
-while(True):
+
+def on_connect_local(client, userdata, flags, rc):
+    print("Connected to local broker with rc" + str(rc))
+
+
+local_mqttclient = mqtt.Client()
+local_mqttclient.on_connect = on_connect_local
+local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
+
+
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+
+cap = cv2.VideoCapture(0)
+
+
+while True:
+    # Read and apply procedure to every frame
     ret, frame = cap.read()
-    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    # Convert image color to greyscale
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    cv.imshow('frame', gray)
+    # Detect faces
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
-    if cv.waitKey(1) & 0xFF == ord('q'):
+    for (x, y, w, h) in faces:
+
+        # Draw the rectangle
+        cv2.rectangle(gray, (x, y), (x + w, y + h), (0, 0, 0), 3)
+        roi = gray[y : y + h, x : x + w]
+
+        cv2.imwrite("test.png", roi)
+
+        # Encode the image
+        rc, png = cv2.imencode(".png", roi)
+        np_png = np.array(png)
+        msg = np_png.tobytes()
+
+        local_mqttclient.publish(LOCAL_MQTT_HOST, msg)
+
+    # Show image in window
+    cv2.imshow("frame", gray)
+    # End if 'q' key is pressed
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 cap.release()
-cv.DestroyAllWindows()
-
+cv2.DestroyAllWindows()
