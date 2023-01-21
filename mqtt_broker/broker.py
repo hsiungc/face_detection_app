@@ -1,8 +1,8 @@
 import paho.mqtt.client as mqtt
 
-LOCAL_MQTT_HOST=""
-LOCAL_MQTT_PORT=""
-LOCAL_MQTT_TOPIC=""
+LOCAL_MQTT_HOST="mosquitto-service"
+LOCAL_MQTT_PORT=1883
+LOCAL_MQTT_TOPIC="camera_topic"
 REMOTE_MQTT_TOPIC=""
 
 def on_connect_local(client, userdata, flags, rc):
