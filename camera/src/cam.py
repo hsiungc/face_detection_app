@@ -36,7 +36,7 @@ while True:
         cv2.rectangle(gray, (x, y), (x + w, y + h), (0, 0, 0), 3)
         roi = gray[y : y + h, x : x + w]
 
-        cv2.imwrite("test.png", roi)
+        # cv2.imwrite("test.png", roi)
 
         # Encode the image
         rc, png = cv2.imencode(".png", roi)
