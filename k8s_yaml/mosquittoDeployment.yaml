@@ -14,9 +14,6 @@ spec:
     spec:
       containers:
       - name: mosquitto
-        image: hsiungc/mosquitto
+        image: hsiungc/mosquitto:v2
         ports:
         - containerPort: 1883
-        env:
-        - name:
-          value:

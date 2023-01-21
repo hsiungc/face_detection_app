@@ -1,0 +1,17 @@
+version: apps/v1
+kind: Deployment
+metadata:
+  name: broker-deployment
+spec:
+  selector:
+    matchLabels:
+      app: broker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: broker
+    spec:
+      containers:
+      - name:
+        image: hsiungc/mqtt_broker:v1
