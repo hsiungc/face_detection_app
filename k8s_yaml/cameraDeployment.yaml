@@ -16,7 +16,9 @@ spec:
       - name: camera
         image: camera:v1
         ports:
-          containerPort: 
+          containerPort: 80
         env:
-        - name:
+        - name: # BRING in info/networking for usb camera
           value:
+        - name: LOCAL_MQTT_HOST
+          value: mosquitto-service

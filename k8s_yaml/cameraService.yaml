@@ -1,0 +1,14 @@
+version: v1
+kind: Service
+metadata:
+  name: camera-service
+  labels:
+    app: camera
+spec:
+  selectors:
+    matchLabels:
+      app: camera
+  ports:
+  - name: camera-service
+    port: 80
+    targetPort: 1883
