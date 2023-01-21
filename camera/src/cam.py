@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import paho.mqtt.client as mqtt
 
-LOCAL_MQTT_HOST = "localhost"
+LOCAL_MQTT_HOST = "mosquitto-service"
 LOCAL_MQTT_PORT = 1883
 LOCAL_MQTT_TOPIC = "test_topic"
 

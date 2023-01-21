@@ -26,8 +26,12 @@ docker build -t hsiungc/camera:v1 .
 docker run -it --rm --device /dev/video0 --network host -e DISPLAY=$DISPLAY camera:latest
 
 cd ../mqtt_broker
-docker build -t hsiungc/mosquitto:v2 .
+docker build -t hsiungc/mosquitto:v4 .
 docker build -t hsiungc/mqtt_broker:v1 .
+
+docker push hsiungc/mosquitto:3
+docker push hsiungc/
+
 docker run
 
 cd ../mqtt_logger
