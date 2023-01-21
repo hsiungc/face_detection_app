@@ -35,7 +35,7 @@ docker push hsiungc/
 docker run
 
 cd ../mqtt_logger
-docker build -t hsiungc/mqtt_logger:v1
+docker build --network host -t hsiungc/mqtt_logger:v1
 
 # Apply YAMLs
 kubectl apply -f /k8s_yaml
