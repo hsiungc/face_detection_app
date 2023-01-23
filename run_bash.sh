@@ -2,41 +2,41 @@
 
 # Include all docker commands used
 
-apt-get update
+# Double check arm64
 
-# Install paho-mqtt
-# Install opencv
+# MQTT Broker
+cd mqtt_broker/
+docker build  --platform linux/arm64 -t hsiungc/mosquitto:v1 .
+docker run hsiungc/mosquitto:v1
+docker push hsiungc/mosquitto:v1
 
-# Install Kubernetes (K3)
-sudo apt update
-sudo apt install -y curl
-	
-mkdir $HOME/.kube/
-curl -sfL https://get.k3s.io | sh -s - --docker --write-kubeconfig-mode 644 --write-kubeconfig $HOME/.kube/config
-#sudo systemctl disable k3s
-sudo systemctl start k3s
-sudo systemctl stop k3s
 
-# Install MQTT
-sudo apt install -y mosquitto-clients
-sudo apt install -y mosquitto
-
-cd /camera
-docker build -t hsiungc/camera:v1 .
-docker run -it --rm --device /dev/video0 --network host -e DISPLAY=$DISPLAY camera:latest
-
-cd ../mqtt_broker
-docker build -t hsiungc/mosquitto:v4 .
-docker build -t hsiungc/mqtt_broker:v1 .
-
-docker push hsiungc/mosquitto:3
-docker push hsiungc/
-
-docker run
-
+# MQTT Logger
 cd ../mqtt_logger
-docker build --network host -t hsiungc/mqtt_logger:v1
+docker build --network host --platform linux/arm64 -t hsiungc/mqtt_logger:v1 .
+docker run hsiungc/mqtt_logger:v1
+docker push hsiungc/mqtt_logger:v1
+
+
+# Camera Deployment
+cd ../camera
+docker build --platform linux/arm64 -t hsiungc/camera:v1 .
+docker run -it --rm --device /dev/video0 --network host -e DISPLAY=$DISPLAY camera:latest
+docker push hsiungc/camera:v1
+
+# Apply camera
+
+# MQTT Forwarder
+cd ../mqtt_forwarder
+docker build --platform linux/arm64 -t hsiungc/mqtt_forwarder:v1
+docker run hsiungc/mqtt_forwarder:v1
+docker push hsiungc/mqtt_forwarder:v1
+
+# Apply Docker networking
 
 # Apply YAMLs
 kubectl apply -f /k8s_yaml
 
+# Check MQTT logger
+kubectl get pods # Get pod name
+kubectl logs -f # <logger pod name>
