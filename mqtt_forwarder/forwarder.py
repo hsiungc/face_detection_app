@@ -11,7 +11,7 @@ def on_connect_local(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     try:
-        print("Message received: ", str(msg.payload.decode("utf-8")))
+        print("Message received: ", str(msg.payload.decode("ISO-8859-1")))
 
         msg = msg.payload
         remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)

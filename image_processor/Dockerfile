@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+RUN pip3 install paho-mqtt
+
+COPY image_processor.py .
+
+CMD python3 image_processor.py

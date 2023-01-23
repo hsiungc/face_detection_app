@@ -1,4 +1,4 @@
-appVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: camera-deployment
@@ -14,11 +14,11 @@ spec:
     spec:
       containers:
       - name: camera
-        image: camera:v1
-        ports:
-          containerPort: 80
-        env:
-        - name: # BRING in info/networking for usb camera
-          value:
-        - name: LOCAL_MQTT_HOST
-          value: mosquitto-service
+        image: hsiungc/camera:v1
+#        ports:
+#          containerPort: 80
+#        env:
+#        - name: # BRING in info/networking for usb camera
+#          value:
+#        - name: LOCAL_MQTT_HOST
+#          value: mosquitto-service

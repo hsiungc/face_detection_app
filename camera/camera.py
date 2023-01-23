@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import paho.mqtt.client as mqtt
 
-
 LOCAL_MQTT_HOST = "mosquitto-service"
 LOCAL_MQTT_PORT = 1883
 LOCAL_MQTT_TOPIC = "camera_topic"
@@ -20,9 +19,9 @@ cap = cv2.VideoCapture(0)
 
 while True:
     # Read and apply procedure to every frame
-    # ret, frame = cap.read()
+    ret, frame = cap.read()
+    # frame = cv2.imread("test.png")
     
-    frame = cv2.imread("test.png")
     # Convert image color to greyscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -46,7 +45,8 @@ while True:
         local_mqttclient.publish(LOCAL_MQTT_TOPIC, msg)
 
     # Show image in window
-    # cv2.imshow("frame", gray)
+    cv2.imshow("frame", gray)
+    
     # End if 'q' key is pressed
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
