@@ -15,10 +15,12 @@ spec:
       containers:
       - name: camera
         image: hsiungc/camera:v1
-#        ports:
-#          containerPort: 80
-#        env:
-#        - name: # BRING in info/networking for usb camera
-#          value:
-#        - name: LOCAL_MQTT_HOST
-#          value: mosquitto-service
+        volumeMounts:
+        - name: cam-0
+          mountPath: /dev/video0
+        securityContext:
+          priviledged: true
+      volumes:
+      - name: cam-0
+        hostPath:
+      	  path: /dev/video0
