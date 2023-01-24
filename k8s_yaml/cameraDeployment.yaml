@@ -23,4 +23,4 @@ spec:
       volumes:
       - name: cam-0
         hostPath:
-      	  path: /dev/video0
+          path: /dev/video0
