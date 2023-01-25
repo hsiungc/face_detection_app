@@ -26,6 +26,13 @@ docker run hsiungc/mqtt_logger:v1
 docker push hsiungc/mqtt_logger:v1
 
 
+# MQTT Forwarder
+cd ../mqtt_forwarder
+docker build --network 251_network --platform linux/arm64 -t hsiungc/mqtt_forwarder:v1
+docker run hsiungc/mqtt_forwarder:v1
+docker push hsiungc/mqtt_forwarder:v1
+
+
 # Camera Deployment
 cd ../camera
 docker build --network 251_network --platform linux/arm64 -t hsiungc/camera:v1 .
@@ -33,13 +40,6 @@ docker run -it --rm --device /dev/video0 --network host -e DISPLAY=$DISPLAY came
 docker push hsiungc/camera:v1
 
 # Apply camera
-
-
-# MQTT Forwarder
-cd ../mqtt_forwarder
-docker build --network 251_network --platform linux/arm64 -t hsiungc/mqtt_forwarder:v1
-docker run hsiungc/mqtt_forwarder:v1
-docker push hsiungc/mqtt_forwarder:v1
 
 
 
