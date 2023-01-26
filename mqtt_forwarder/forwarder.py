@@ -1,19 +1,23 @@
-import paho.mqtt.client as mqtt
 import sys
+
+import paho.mqtt.client as mqtt
 
 LOCAL_MQTT_HOST = "mosquitto-service"
 LOCAL_MQTT_PORT = 1883
 LOCAL_MQTT_TOPIC = "camera_topic"
 REMOTE_MQTT_TOPIC = "cloud_topic"
 
+
 def on_connect_local(client, userdata, flags, rc):
     print("Connected to local broker with rc: " + str(rc))
     client.subscribe(LOCAL_MQTT_TOPIC)
 
+
 def on_connect_remote(client, userdata, flags, rc):
     print("Connected to remote broker with rc: " + str(rc))
     client.subscribe(REMOTE_MQTT_TOPIC)
-    
+
+
 def on_message(client, userdata, msg):
     try:
         print("Message received: ", str(msg.payload.decode("ISO-8859-1")))
@@ -22,6 +26,7 @@ def on_message(client, userdata, msg):
         remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)
     except:
         print("Unexpected error: ", sys.exc_info()[0])
+
 
 local_mqttclient = mqtt.Client()
 local_mqttclient.on_connect = on_connect_local

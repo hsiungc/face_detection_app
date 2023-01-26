@@ -6,8 +6,10 @@ LOCAL_MQTT_HOST = "mosquitto-service"
 LOCAL_MQTT_PORT = 1883
 LOCAL_MQTT_TOPIC = "camera_topic"
 
+
 def on_connect_local(client, userdata, flags, rc):
     print("Connected to local broker with rc" + str(rc))
+
 
 local_mqttclient = mqtt.Client()
 local_mqttclient.on_connect = on_connect_local
@@ -21,7 +23,7 @@ while True:
     # Read and apply procedure to every frame
     ret, frame = cap.read()
     # frame = cv2.imread("test.png")
-    
+
     # Convert image color to greyscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -41,12 +43,12 @@ while True:
         # rc, png = cv2.imencode(".png", roi)
         np_png = np.array(png)
         msg = np_png.tobytes()
-        
+
         local_mqttclient.publish(LOCAL_MQTT_TOPIC, msg)
 
     # Show image in window
     cv2.imshow("frame", gray)
-    
+
     # End if 'q' key is pressed
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
