@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: logger-deployment
+  name: processor-deployment
 spec:
   selector:
     matchLabels:
-      app: logger
+      app: processor
   replicas: 1
   template:
     metadata:
       labels:
-        app: logger
+        app: processor
     spec:
       containers:
-      - name: logger
-        image: hsiungc/mqtt_logger:v1
+      - name: processor
+        image: hsiungc/processor:v1
