@@ -1,10 +1,14 @@
 import sys
+from os import environ
 
 import paho.mqtt.client as mqtt
 
 LOCAL_MQTT_HOST = "mosquitto-service"
 LOCAL_MQTT_PORT = 1883
 LOCAL_MQTT_TOPIC = "camera_topic"
+
+REMOTE_MQTT_HOST = environ.get("AWS_IP")
+REMOTE_MQTT_PORT = 1883
 REMOTE_MQTT_TOPIC = "cloud_topic"
 
 
@@ -16,6 +20,11 @@ def on_connect_local(client, userdata, flags, rc):
 def on_connect_remote(client, userdata, flags, rc):
     print("Connected to remote broker with rc: " + str(rc))
     client.subscribe(REMOTE_MQTT_TOPIC)
+
+
+remote_mqttclient = mqtt.Client("aws-broker")
+remote_mqttclient.on_connect = on_connect_remote
+remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
 
 
 def on_message(client, userdata, msg):

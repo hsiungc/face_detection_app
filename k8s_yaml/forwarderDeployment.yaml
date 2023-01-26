@@ -15,3 +15,6 @@ spec:
       containers:
       - name: forwarder
         image: hsiungc/mqtt_forwarder:v1
+        env:
+        - name: AWS_IP
+          value: "10.43.70.78"

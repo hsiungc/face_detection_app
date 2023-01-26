@@ -3,6 +3,8 @@
 # System setup
 apt-get update
 
+sudo su
+
 # Install Kubernetes (K3s)
 sudo apt update
 sudo apt install -y curl
