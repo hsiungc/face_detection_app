@@ -1,4 +1,4 @@
-version: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fowarder-deployment
@@ -13,5 +13,5 @@ spec:
         app: forwarder
     spec:
       containers:
-      - name:
+      - name: forwarder
         image: hsiungc/mqtt_forwarder:v1

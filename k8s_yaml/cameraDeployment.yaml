@@ -19,7 +19,7 @@ spec:
         - name: cam-0
           mountPath: /dev/video0
         securityContext:
-          priviledged: true
+          privileged: true
       volumes:
       - name: cam-0
         hostPath:
