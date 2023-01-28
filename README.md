@@ -1,52 +1,16 @@
-# 251-hsiungc-hw1
+# 251-hsiungc-hw2
+The purpose of HW2 is to deploy a face detection python script on an edge VM, which will store facial images through an AWS EC2 instance into object storage.
 
-Components:
-[ ] Camera
-	[ ] Camera.py
-	[ ] Camera Dockerfile
-	[ ] Camera Deployment
-	[ ] Camera Service
+# Building the Application
+After running Ubuntu 18.04 through a VM (VMware Fusion), clone the repo and perform an initial setup of the workspace. Docker, K3s, Mosquitto (MQTT), and the AWS CLI are required for this homework. Workspace setup commands are found in the setup.sh file (installing K3s, Mosquitto (MQTT))
 
-[ ] MQTT Broker (working)
-	[x] Deployed
-	[x] Broker Dockerfile
-	[x] Broker Deployment
-	[x] Broker Service
+To kickoff the homework, Docker images for the following components should be built in the following order:
 
-[ ] MQTT Logger (working)
-	[ ] Deployed
-	[ ] Logger Dockerfile
-	[ ] Logger Deployment
+	1. MQTT Broker
+	2. MQTT Logger
+	4. Camera
+	3. MQTT Forwarder
 
-To-Do
-[ ] Research MQTT forwarder
-[ ] Research republishing (MQTT broker)
-[ ] Research topics
+Once all components have been deployed, additional 
 
-
-Edge VM:
-	- Use Alpine Linux as base OS for MQTT containers
-	[x] Install MQTT broker on Edge VM --> "apt install mosquitto"
-		- Face detector should send to this broker first (local broker)
-	[x] Install local listener
-		- output to log that received a face message (standard out)
-	Application:
-	Face detection —> OpenCV
-		- scan video frames coming from camera for faces
-		- cut out faces from frame and send via binary message for each face
-		- Use MQTT
-		[x] Use Ubuntu as base for container
-
-- Need another component that receives messages from local broker and send them to cloud (MQTT broker)???
-
-AWS VM:
-	- Lightweight = micro
-
-	Containers:
-		- MQTT broker in Docker container
-			- faces sent as binary messages
-
-- Need second component that receives messages and saves to S3 (LOOK AT BOTO)
-
-s3 Object storage
-	- Use both to receive and save images
+# Running the Application

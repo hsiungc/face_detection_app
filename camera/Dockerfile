@@ -79,8 +79,8 @@ RUN apt-get update && apt-get install -y \
 	
 WORKDIR ${APP_DIR}
 
-COPY --from=build /venv /venv	
-COPY --from=build /opencv/build /opencv/build
+COPY --from=build /venv /venv
+COPY --from=build /build /build
 
 ENV PATH /venv/bin:$PATH
 
