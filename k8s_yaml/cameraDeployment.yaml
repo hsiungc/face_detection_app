@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: camera
-        image: hsiungc/camera:v1
+        image: hsiungc/camera:v2
         volumeMounts:
         - name: cam-0
           mountPath: /dev/video0

@@ -17,13 +17,19 @@ local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
 
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 
-while True:
+cap.isOpened()
+print("Camera is ready")
+
+while(cap.isOpened()):
     # Read and apply procedure to every frame
     ret, frame = cap.read()
     # frame = cv2.imread("test.png")
 
+    if ret == False:
+    	break
+    	
     # Convert image color to greyscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -49,9 +55,10 @@ while True:
     # Show image in window
     cv2.imshow("frame", gray)
 
+    cv2.DestroyAllWindows()
+    
     # End if 'q' key is pressed
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 cap.release()
-cv2.DestroyAllWindows()
