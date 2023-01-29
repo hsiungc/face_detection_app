@@ -17,6 +17,6 @@ spec:
         image: hsiungc/mqtt_forwarder:v2
         env:
         - name: AWS_IP
-          value: "3.83.245.179"
+          value: "54.90.54.177"
         - name: NODEPORT
-          value: "30477"
+          value: "30145"
