@@ -1,5 +1,3 @@
-import sys
-
 import paho.mqtt.client as mqtt
 
 LOCAL_MQTT_HOST = "mosquitto-service"
@@ -17,7 +15,7 @@ def on_message(client, userdata, msg):
         print("Message received: ", str(msg.payload.decode("ISO-8859-1")))
 
     except:
-        print("Unexpected error:", sys.exc_info()[0])
+        print("Unexpected error:")
 
 
 local_mqttclient = mqtt.Client()

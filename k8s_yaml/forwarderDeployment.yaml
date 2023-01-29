@@ -14,7 +14,9 @@ spec:
     spec:
       containers:
       - name: forwarder
-        image: hsiungc/mqtt_forwarder:v1
+        image: hsiungc/mqtt_forwarder:v2
         env:
         - name: AWS_IP
-          value: "10.43.70.78"
+          value: "3.83.245.179"
+        - name: NODEPORT
+          value: "30477"

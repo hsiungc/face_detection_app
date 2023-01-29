@@ -1,4 +1,3 @@
-import sys
 from os import environ
 
 import paho.mqtt.client as mqtt
@@ -8,8 +7,8 @@ LOCAL_MQTT_PORT = 1883
 LOCAL_MQTT_TOPIC = "camera_topic"
 
 REMOTE_MQTT_HOST = environ.get("AWS_IP")
-REMOTE_MQTT_PORT = 1883
-REMOTE_MQTT_TOPIC = "cloud_topic"
+REMOTE_MQTT_PORT = int(environ.get("NODEPORT"))
+REMOTE_MQTT_TOPIC = "camera_topic"
 
 
 def on_connect_local(client, userdata, flags, rc):
@@ -22,7 +21,7 @@ def on_connect_remote(client, userdata, flags, rc):
     client.subscribe(REMOTE_MQTT_TOPIC)
 
 
-remote_mqttclient = mqtt.Client("aws-broker")
+remote_mqttclient = mqtt.Client()
 remote_mqttclient.on_connect = on_connect_remote
 remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
 
@@ -34,7 +33,7 @@ def on_message(client, userdata, msg):
         msg = msg.payload
         remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)
     except:
-        print("Unexpected error: ", sys.exc_info()[0])
+        print("Unexpected error.")
 
 
 local_mqttclient = mqtt.Client()
