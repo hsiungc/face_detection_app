@@ -9,18 +9,18 @@ Once Ubuntu is up and running on a VM, perform an initial setup of the workspace
 To kick off the homework, the following components should be built in the edge VM; first in Docker, then in Kubernetes. See the component.sh script for the commands.
 
 Edge VM
-	1. MQTT Broker
-	2. MQTT Logger
-	4. Camera
-	3. MQTT Forwarder*
+- MQTT Broker
+- MQTT Logger
+- Camera
+- MQTT Forwarder*
 
-*The forwarder deployment requires the AWS IP and AWS MQTT broker NodePort environment variables to be updated manually every time the EC2 instance is spun up.
+***The forwarder deployment requires the AWS IP and AWS MQTT broker NodePort environment variables to be updated manually every time the EC2 instance is spun up.**
 
 Once all components are built and deployed, additional containers should be set up in the EC2 instance (upgraded to t2.medium). Another MQTT broker and the image processor are created here. If K3s is chosen for the orchestration and networking, it needs to be installed into the VM. The YAML file text are copied and pasted, and the containers are pulled from DockerHub.
 
 Cloud VM
-	1. MQTT Broker
-	2. Image Processor
+- MQTT Broker
+- Image Processor
 
 Make sure an S3 bucket is already configured (in this case, the bucket is '251-bucket'). The code running the image processor automatically sends the images for storage in the S3 bucket.
 
