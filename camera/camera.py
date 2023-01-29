@@ -17,7 +17,7 @@ local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
 
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 
 while True:
     # Read and apply procedure to every frame
