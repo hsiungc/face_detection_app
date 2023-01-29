@@ -25,3 +25,15 @@ sudo apt install -y mosquitto
 pip3 install paho-mqtt
 
 # Install opencv
+
+
+ssh-add -K "your_keypair.pem" 
+ssh-add -L
+
+
+ssh -A ubuntu@ec2-3-83-245-179.compute-1.amazonaws.com 
+
+sudo su
+
+aws ec2 authorize-security-group-ingress --group-id sg-02533bccf0f3de13d --protocol tcp --port 1883 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-02533bccf0f3de13d --protocol tcp --port 30145 --cidr 0.0.0.0/0

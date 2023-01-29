@@ -14,3 +14,8 @@ To kickoff the homework, the following components should be built in the followi
 Once all components have been deployed, additional containers should be set up in an EC2 instance.
 
 # Running the Application
+
+
+#### Kubernetes Objects:
+
+#### Docker Images:

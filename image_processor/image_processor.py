@@ -1,30 +1,17 @@
-import logging
-import os
-import sys
+from datetime import datetime
 
+import cv2
 import boto3
 import paho.mqtt.client as mqtt
-from botocore.exceptions import ClientError
+import numpy as np
 
-BUCKET = "251-bucket"
+
 S3_CLIENT = boto3.client("s3")
-
-
-def upload_file(file_name, bucket, obj_name=None):
-    if obj_name is None:
-        obj_name = os.path.basename(file_name)
-
-    try:
-        response = S3_CLIENT.upload_file(file_name, bucket, obj_name)
-    except ClientError as e:
-        logging.error(e)
-        return False
-    return True
-
+BUCKET = "251-bucket"
 
 LOCAL_MQTT_HOST = "mosquitto-service"
 LOCAL_MQTT_PORT = 1883
-LOCAL_MQTT_TOPIC = "cloud_topic"
+LOCAL_MQTT_TOPIC = "camera_topic"
 
 
 def on_connect_local(client, userdata, flags, rc):
@@ -34,11 +21,20 @@ def on_connect_local(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     try:
-        print("Message received: ", str(msg.payload.decode("ISO-8859-1")))
-        upload_file(msg, BUCKET)
+        print("Message received.")
+
+        msg = msg.payload
+        decode = np.frombuffer(msg, dtype = "uint8")
+        img = cv2.imdecode(decode, 0)
+
+        now = datetime.now()
+        dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
+        file = "face-" + dt_string + ".png"
+
+        S3_CLIENT.put_object(BUCKET, img, file)
 
     except:
-        print("Unexpected error:", sys.exc_info()[0])
+        print("Unexpected error.")
 
 
 local_mqttclient = mqtt.Client()
