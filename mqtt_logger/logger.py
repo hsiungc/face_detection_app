@@ -12,10 +12,10 @@ def on_connect_local(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     try:
-        print("Message received: ", str(msg.payload.decode("ISO-8859-1")))
+        print("Message received from camera.")
 
     except:
-        print("Unexpected error:")
+        print("Unexpected error.")
 
 
 local_mqttclient = mqtt.Client()

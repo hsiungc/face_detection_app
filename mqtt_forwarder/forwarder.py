@@ -28,7 +28,7 @@ remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
 
 def on_message(client, userdata, msg):
     try:
-        print("Message received: ", str(msg.payload.decode("ISO-8859-1")))
+        print("Message received from camera.")
 
         msg = msg.payload
         remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)
