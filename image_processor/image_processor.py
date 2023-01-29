@@ -23,7 +23,6 @@ def on_message(client, userdata, msg):
     try:
         print("Message received.")
 
-        msg = msg.payload
         decode = np.frombuffer(msg, dtype = "uint8")
         img = cv2.imdecode(decode, 0)
 
@@ -31,7 +30,7 @@ def on_message(client, userdata, msg):
         dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
         file = "face-" + dt_string + ".png"
 
-        S3_CLIENT.put_object(BUCKET, img, file)
+        S3_CLIENT.put_object(Bucket=BUCKET, Body=img, Key=file)
 
     except:
         print("Unexpected error.")
