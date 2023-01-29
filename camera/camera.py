@@ -41,13 +41,13 @@ while True:
         msg = np_png.tobytes()
 
         local_mqttclient.publish(LOCAL_MQTT_TOPIC, msg)
-
-    	# Show image in window
-    	#cv2.imshow("frame", gray)
+        
+        # Show image in window
+        # cv2.imshow("frame", gray)
     
-    	# End if 'q' key is pressed
-    	if cv2.waitKey(1) & 0xFF == ord("q"):
-        	break
+        # End if 'q' key is pressed
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
 
 cap.release()
 cv2.destroyAllWindows()
