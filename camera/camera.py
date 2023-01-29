@@ -22,7 +22,7 @@ cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 while True:
     # Read and apply procedure to every frame
     ret, frame = cap.read()
-    	
+
     # Convert image color to greyscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -41,10 +41,10 @@ while True:
         msg = np_png.tobytes()
 
         local_mqttclient.publish(LOCAL_MQTT_TOPIC, msg)
-        
+
         # Show image in window
         # cv2.imshow("frame", gray)
-    
+
         # End if 'q' key is pressed
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break

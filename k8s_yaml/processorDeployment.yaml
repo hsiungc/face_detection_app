@@ -14,4 +14,9 @@ spec:
     spec:
       containers:
       - name: processor
-        image: hsiungc/mqtt_processor:v2
+        image: hsiungc/mqtt_processor:v6
+        env:
+        - name: ACCESS_KEY
+          value: "###########"
+        - name: SECRET_KEY
+          value: "###########"

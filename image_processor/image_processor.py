@@ -1,13 +1,17 @@
+import io
 from datetime import datetime
+from os import environ
 
-import cv2
 import boto3
-import paho.mqtt.client as mqtt
 import numpy as np
+import paho.mqtt.client as mqtt
 
-
-S3_CLIENT = boto3.client("s3")
 BUCKET = "251-bucket"
+S3_CLIENT = boto3.client(
+    "s3",
+    aws_access_key_id=environ.get("ACCESS_KEY"),
+    aws_secret_access_key=environ.get("SECRET_KEY"),
+)
 
 LOCAL_MQTT_HOST = "mosquitto-service"
 LOCAL_MQTT_PORT = 1883
@@ -23,14 +27,16 @@ def on_message(client, userdata, msg):
     try:
         print("Message received.")
 
-        decode = np.frombuffer(msg, dtype = "uint8")
-        img = cv2.imdecode(decode, 0)
+        msg = msg.payload
+        decode = np.frombuffer(msg, dtype="uint8")
+        img = io.BytesIO(decode)
 
         now = datetime.now()
         dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
         file = "face-" + dt_string + ".png"
 
-        S3_CLIENT.put_object(Bucket=BUCKET, Body=img, Key=file)
+        S3_CLIENT.put_object(Key=file, Bucket=BUCKET, Body=img, ContentType="image/png")
+        print("Pushed to S3")
 
     except:
         print("Unexpected error.")
