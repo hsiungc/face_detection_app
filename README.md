@@ -5,9 +5,9 @@ The purpose of this project is to deploy a face detection application on an NVID
 MQTT is the messaging service for this deployment. The face detection app (camera) will publish image frames as bytes to the MQTT broker, which in turn pushes the messages to the subscribed logger and the forwarder in the edge VM. The forwarder sends the messages to the broker and the image processor in the cloud. After the processor receives the messages, it automatically converts the bytes into images that are pushed into an S3 bucket.
 
 ## Building the Face Detection Application
-Once Ubuntu is up and running on a VM, perform an initial setup of the workspace. Docker, K3s, Mosquitto (MQTT), and the AWS CLI are required for this project. Workspace setup commands are found in the setup.sh file (installing K3s and other libraries/packages, setting up the EC2 instance)
+Once Ubuntu is up and running on the Jetson Nano, perform an initial setup of the workspace. Docker, K3s, Mosquitto (MQTT), and the AWS CLI are required for this project. Workspace setup commands are found in the setup.sh file (installing K3s and other libraries/packages, setting up the EC2 instance)
 
-To kick off, the following components should be built in the edge VM; first in Docker, then in Kubernetes. See the component.sh script for the commands.
+To kick off, the following components should be built in the edge device; first in Docker, then in Kubernetes. See the component.sh script for the commands.
 
 Edge VM
 - MQTT Broker
