@@ -1,12 +1,13 @@
-# 251-hsiungc-hw2
-The purpose of HW2 is to deploy a face detection python script on an edge VM, which will store facial images through an AWS EC2 instance into object storage.
+<h1>Face Detection Edge Deployment</h1>
 
-MQTT is the messaging service of choice for this homework. The face detection app (camera) will publish image frames as bytes to the MQTT broker, which in turn pushes the messages to the subscribed logger and the forwarder in the edge VM. The forwarder sends the messages to the broker and the image processor in the cloud. After the processor receives the messages, it automatically converts the bytes into images that are pushed into an S3 bucket.
+The purpose of this project is to deploy a face detection application on an NVIDIA Jetson Nano device, which will stream facial images to an AWS EC2 instance in the cloud and store them into an object storage.
+
+MQTT is the messaging service for this deployment. The face detection app (camera) will publish image frames as bytes to the MQTT broker, which in turn pushes the messages to the subscribed logger and the forwarder in the edge VM. The forwarder sends the messages to the broker and the image processor in the cloud. After the processor receives the messages, it automatically converts the bytes into images that are pushed into an S3 bucket.
 
 ## Building the Face Detection Application
-Once Ubuntu is up and running on a VM, perform an initial setup of the workspace. Docker, K3s, Mosquitto (MQTT), and the AWS CLI are required for this homework. Workspace setup commands are found in the setup.sh file (installing K3s and other libraries/packages, setting up the EC2 instance)
+Once Ubuntu is up and running on a VM, perform an initial setup of the workspace. Docker, K3s, Mosquitto (MQTT), and the AWS CLI are required for this project. Workspace setup commands are found in the setup.sh file (installing K3s and other libraries/packages, setting up the EC2 instance)
 
-To kick off the homework, the following components should be built in the edge VM; first in Docker, then in Kubernetes. See the component.sh script for the commands.
+To kick off, the following components should be built in the edge VM; first in Docker, then in Kubernetes. See the component.sh script for the commands.
 
 Edge VM
 - MQTT Broker
@@ -24,15 +25,15 @@ Cloud VM
 
 Make sure an S3 bucket is already configured (in this case, the bucket is '251-bucket'). The code running the image processor automatically sends the images for storage in the S3 bucket.
 
-An IAM role for access to S3 needs to be configured and mounted to the EC2 instance. The access key and secret key are hardcoded as environment variables into the image processor deployment YAML. This will allow the processor to push the decoded images into S3. For purposes of security, both are removed from the GitHub repository. 
+An IAM role for access to S3 needs to be configured and mounted to the EC2 instance. The access key and secret key are called as environment variables into the image processor deployment YAML. This will allow the processor to push the decoded images into S3. For purposes of security, both keys are not included in the GitHub repository. 
 
-The S3 bucket can be accessed here: https://s3.console.aws.amazon.com/s3/buckets/251-bucket
+The S3 bucket can be accessed here: ~~https://s3.console.aws.amazon.com/s3/buckets/251-bucket~~
 
 ## Running the Face Detection Application
 The app should run automatically once the camera container is deployed. Be ready to smile and include as many people as needed in the camera frame.
 
 ## Future Goals
-While this was quite the arduous process, there was much learning involved. In the future, I would look into the following as a self-project to make the undertaking more robust:
+There was much learning involved in building this application. In the future, I will look into the following for self-exploration:
 
 1. Smaller containers (i.e.; multistage builds)
 2. InitContainers and healthchecks in Kubernetes - currently, some of the containers will crashloop until the image finishes setting up.
